@@ -30,6 +30,18 @@ export default [
     },
   },
 
+  // Keep TypeScript and Astro files consistent across editor configurations.
+  {
+    files: ["**/*.ts", "**/*.astro"],
+    rules: {
+      quotes: ["error", "single", { avoidEscape: true, allowTemplateLiterals: true }],
+      semi: ["error", "always"],
+      "comma-dangle": ["error", "always-multiline"],
+      "object-curly-spacing": ["error", "always"],
+      "array-bracket-spacing": ["error", "never"],
+    },
+  },
+
   // Astro files
   ...eslintPluginAstro.configs.recommended,
 

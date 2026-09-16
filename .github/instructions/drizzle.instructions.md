@@ -55,6 +55,25 @@ export async function getAllGameIds(db: Database): Promise<number[]> {
 - Map raw rows to the app-facing `Game`/`Publisher`/`Category` types in one place; don't leak Drizzle row shapes into components.
 - Keep ordering/lookup logic in `games.ts`, not in pages.
 
+## API Documentation
+
+- Every exported function in `db/` and `src/lib/` MUST have a TSDoc/JSDoc comment.
+- Each exported function's comment must describe its purpose, every parameter (including the injectable `db` argument), and its return value. Use `@param` and `@returns` tags when they make the contract clearer.
+- Document observable behavior such as ordering, nullability, idempotency, error conditions, and determinism. Do not restate the SQL or implementation line by line.
+- Keep API comments current whenever the function's behavior, parameters, or return type changes. Stale comments are bugs.
+
+```ts
+/**
+ * Return games in the stable title order used by static page generation.
+ *
+ * @param db Injectable Drizzle database client used for the query.
+ * @returns Games mapped to the app-facing type.
+ */
+export async function getAllGames(db: Database): Promise<Game[]> {
+  // Query implementation...
+}
+```
+
 ## Determinism
 
 Seed-derived values must be reproducible across builds. Derive star ratings from a stable hash of the title (`ratingFromTitle`) — **never** `Math.random()`.
@@ -70,3 +89,8 @@ Node.js 22.13 or later is required because the data layer uses the built-in `nod
 ## Type checking
 
 The data layer (`db/**/*.ts`, `src/lib/*.ts`) is type-checked by `npm run typecheck`, which runs the native **TypeScript 7** compiler (`tsgo`, from `@typescript/native-preview`) against `tsconfig.tsgo.json`. Keep helpers exported with explicit parameter and return types so `tsgo` can verify them. Linting is unaffected — ESLint + `typescript-eslint` still run on the classic `typescript` package.
+
+## Comments
+
+- Explain why a schema, transform, migration workaround, or driver bridge is necessary when the reason is not obvious.
+- Avoid comments that paraphrase a table definition, query, or statement. Prefer names and types that make straightforward code self-explanatory.
