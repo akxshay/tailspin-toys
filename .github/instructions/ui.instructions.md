@@ -20,6 +20,13 @@ Refer to technology-specific instruction files:
 
 ## Core Principles
 
+### Comments and Documentation
+
+- Comments must explain **why** code exists, the intent behind a decision, or a constraint that is not apparent from the implementation.
+- Do not write comments that merely restate the code. Prefer clearer names and structure when the code itself can explain the **what**.
+- Keep comments, TSDoc, and documentation current with the code they describe. Updating or deleting stale documentation is part of any change that affects it.
+- Use TSDoc/JSDoc for exported APIs and document the contract rather than the implementation details.
+
 ### Testability
 
 - Every interactive element MUST include a `data-testid` attribute
@@ -50,6 +57,7 @@ Refer to technology-specific instruction files:
 - Keep components focused on a single responsibility
 - Use props for configuration, not duplication
 - Document component APIs with TypeScript types
+- Every reusable `.astro` component MUST document its `Props` interface, including what each prop controls and any important defaults or constraints.
 
 ## Development Workflow
 
